@@ -1,0 +1,41 @@
+{
+  "name": "determinant",
+  "version": "1.0.0",
+  "description": "디미고 2학년 공업수학: 행렬식을 이용한 연립방정식의 해법",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "npm run compile && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ChalkPE@github.com/ChalkPE/determinant.git"
+  },
+  "keywords": [
+    "math",
+    "matrix",
+    "determinant",
+    "linear",
+    "equation"
+  ],
+  "author": "ChalkPE <chalk@chalk.pe>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChalkPE/determinant/issues"
+  },
+  "homepage": "https://github.com/ChalkPE/determinant#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.0.2",
+    "dirty-chai": "^2.0.0",
+    "mocha": "^3.4.2",
+    "standard": "^10.0.2"
+  },
+  "dependencies": {
+    "immutable": "^3.8.1"
+  }
+}
