@@ -35,6 +35,10 @@ class SquareMatrix {
     else return '⎢⎥'
   }
 
+  getMinor (i, j) {
+    return this.data.delete(i).map(row => row.delete(j))
+  }
+
   toString () {
     return this.data.map((row, index) => {
       const border = this.getBorders(index)

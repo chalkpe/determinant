@@ -51,7 +51,7 @@ describe('SquareMatrix', function () {
       expect(new That([[2, 2], [2, 2]]).data).to.be.an.instanceof(List)
     })
 
-    it('입력한 값이 대입됨', function () {
+    it('생성자에 입력한 값이 대입됨', function () {
       const data = [[1, 2], [3, 4]]
       expect(new That(data).data.toJS()).to.deep.equal(data)
     })
@@ -62,7 +62,7 @@ describe('SquareMatrix', function () {
       expect(Number.isInteger(that.size)).to.be.true()
     })
 
-    it('제대로 계산함', function () {
+    it('크기를 제대로 계산함', function () {
       const two = new That([[1, 2], [3, 4]])
       const three = new That([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
@@ -77,7 +77,7 @@ describe('SquareMatrix', function () {
       expect(that.name).to.be.a('string')
     })
 
-    it('제대로 표시함', function () {
+    it('이름을 제대로 표시함', function () {
       const two = new That([[0, 0], [1, 1]])
       const three = new That([[3, 6, 9], [6, 9, 3], [9, 3, 6]])
 
@@ -87,12 +87,47 @@ describe('SquareMatrix', function () {
   })
 
   describe('#toString', function () {
-    it('예쁘게 출력함', function () {
+    it('행렬을 예쁘게 출력함', function () {
       const two = new That([[1, 2], [3, 4]])
       const three = new That([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
       expect(two.toString()).to.equal('⎡ 1 2 ⎤\n⎣ 3 4 ⎦')
       expect(three.toString()).to.equal('⎡ 1 2 3 ⎤\n⎢ 4 5 6 ⎥\n⎣ 7 8 9 ⎦')
+    })
+  })
+
+  describe('#getMinor', function () {
+    it('소행렬식을 제대로 구함', function () {
+      const three = new That([
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+      ])
+
+      const five = new That([
+        [+1, +2, +3, +4, +5],
+        [+6, +7, +8, +9, 10],
+        [11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20],
+        [21, 22, 23, 24, 25]
+      ])
+
+      expect(three.getMinor(1, 1).toJS()).to.deep.equal([
+        [1, 3],
+        [7, 9]
+      ])
+
+      expect(three.getMinor(0, 2).toJS()).to.deep.equal([
+        [4, 5],
+        [7, 8]
+      ])
+
+      expect(five.getMinor(2, 3).toJS()).to.deep.equal([
+        [+1, +2, +3, +5],
+        [+6, +7, +8, 10],
+        [16, 17, 18, 20],
+        [21, 22, 23, 25]
+      ])
     })
   })
 })
