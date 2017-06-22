@@ -2,7 +2,7 @@
 
 import chai from 'chai'
 import dirtyChai from 'dirty-chai'
-import { List, fromJS, is } from 'immutable'
+import { List } from 'immutable'
 
 chai.use(dirtyChai)
 const { expect } = chai
@@ -47,13 +47,13 @@ describe('SquareMatrix', function () {
   })
 
   describe('.data', function () {
-    it('불변 배열임', function () {
+    it('불변 리스트임', function () {
       expect(new That([[2, 2], [2, 2]]).data).to.be.an.instanceof(List)
     })
 
     it('입력한 값이 대입됨', function () {
       const data = [[1, 2], [3, 4]]
-      expect(is(new That(data).data, fromJS(data))).to.be.true()
+      expect(new That(data).data.toJS()).to.deep.equal(data)
     })
   })
   describe('.size', function () {
@@ -83,6 +83,16 @@ describe('SquareMatrix', function () {
 
       expect(two.name).to.equal('2 × 2 정사각행렬')
       expect(three.name).to.equal('3 × 3 정사각행렬')
+    })
+  })
+
+  describe('#toString', function () {
+    it('예쁘게 출력함', function () {
+      const two = new That([[1, 2], [3, 4]])
+      const three = new That([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+      expect(two.toString()).to.equal('⎡ 1 2 ⎤\n⎣ 3 4 ⎦')
+      expect(three.toString()).to.equal('⎡ 1 2 3 ⎤\n⎢ 4 5 6 ⎥\n⎣ 7 8 9 ⎦')
     })
   })
 })

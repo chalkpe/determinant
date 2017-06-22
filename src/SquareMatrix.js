@@ -31,7 +31,7 @@ class SquareMatrix {
 
   getBorders (index) {
     if (index === 0) return '⎡⎤'
-    else if (index === this.size - 1) return '⎣⎦​​​'
+    else if (index === this.size - 1) return '⎣⎦'
     else return '⎢⎥'
   }
 
