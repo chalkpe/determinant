@@ -1,6 +1,6 @@
 const { List, fromJS } = require('immutable')
 
-class Equation {
+class LinearEquation {
   constructor (coefficients, constantTerm) {
     if (!List.isList(coefficients)) coefficients = fromJS(coefficients)
     if (!List.isList(coefficients) || coefficients.some(n => !Number.isInteger(n))) {
@@ -13,12 +13,12 @@ class Equation {
 
     this.coefficients = coefficients // 계수
     this.constantTerm = constantTerm // 상수항
-    this.degree = this.coefficients.size
+    this.n = this.coefficients.size // 미지수의 수
   }
 
   toString () {
-
+    this.coefficients.map((v, i) => `${v}${String.fromCharCode('a'.charCodeAt() + i)}`)
   }
 }
 
-export default Equation
+export default LinearEquation

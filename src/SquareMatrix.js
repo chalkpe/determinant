@@ -17,8 +17,10 @@ class SquareMatrix {
     }
 
     this.elements = elements
-    this.max = [...Array(this.size)].map((_, i) =>
-      Math.max(...elements.map(row => row.get(i).toString(10).length)))
+
+    // .toString()에서 요소 정렬할 때 사용함
+    this.max = [...Array(this.size)].map((v, i) =>
+      Math.max(...this.elements.map(row => row.get(i).toString(10).length)))
   }
 
   get size () {

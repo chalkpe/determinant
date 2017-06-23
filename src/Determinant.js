@@ -1,7 +1,6 @@
 import SquareMatrix from './SquareMatrix'
 
 class Determinant {
-  // 여인자 전개를 이용함
   static compute (matrix) {
     if (!(matrix instanceof SquareMatrix)) {
       throw new Error('정사각행렬이 아닙니다')
@@ -10,8 +9,9 @@ class Determinant {
     if (matrix.size === 0) return 1
     if (matrix.size === 1) return matrix.elements.get(0).get(0)
 
+    // 여인자 전개
     return [...Array(matrix.size)]
-      .map((_, i) => this.getCofactor(matrix, i))
+      .map((v, i) => this.getCofactor(matrix, i))
       .reduce((a, b) => a + b, 0)
   }
 
