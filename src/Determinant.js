@@ -23,4 +23,5 @@ class Determinant {
   }
 }
 
+// 행렬식
 export default Determinant

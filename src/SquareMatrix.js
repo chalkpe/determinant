@@ -1,4 +1,4 @@
-const { List, fromJS } = require('immutable')
+import { List, fromJS } from 'immutable'
 
 class SquareMatrix {
   constructor (elements) {
@@ -63,4 +63,5 @@ class SquareMatrix {
   }
 }
 
+// 정사각행렬
 export default SquareMatrix
