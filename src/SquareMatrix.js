@@ -17,14 +17,12 @@ class SquareMatrix {
     }
 
     this.elements = elements
-    this.size = elements.size
-
-    if (this.size === 1) {
-      // throw new Error(`${this.name}은 지원하지 않습니다`)
-    }
-
     this.max = [...Array(this.size)].map((_, i) =>
       Math.max(...elements.map(row => row.get(i).toString(10).length)))
+  }
+
+  get size () {
+    return this.elements.size
   }
 
   get name () {
@@ -42,14 +40,19 @@ class SquareMatrix {
   }
 
   getMinor (i, j) {
-    if (i < 0 || j < 0) throw new Error('행렬 최소 범위를 벗어났습니다')
-    if (i >= this.size || j >= this.size) throw new Error('행렬 최대 범위를 벗어났습니다')
+    if (i < 0 || j < 0) {
+      throw new Error('행렬 최소 범위를 벗어났습니다')
+    }
 
-    return new SquareMatrix(this.data.delete(i).map(row => row.delete(j)))
+    if (i >= this.size || j >= this.size) {
+      throw new Error('행렬 최대 범위를 벗어났습니다')
+    }
+
+    return new SquareMatrix(this.elements.delete(i).map(row => row.delete(j)))
   }
 
   toString () {
-    return this.data.map((row, index) => {
+    return this.elements.map((row, index) => {
       const border = this.getBorders(index)
       const rowString = row.map((e, i) => e.toString(10).padStart(this.max[i]))
 

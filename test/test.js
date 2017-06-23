@@ -5,7 +5,7 @@ import dirtyChai from 'dirty-chai'
 
 import { List } from 'immutable'
 import SquareMatrix from '../src/SquareMatrix'
-import CofactorExpansion from '../src/CofactorExpansion'
+import Determinant from '../src/Determinant'
 
 chai.use(dirtyChai)
 const { expect } = chai
@@ -149,14 +149,14 @@ describe('SquareMatrix', function () {
   })
 })
 
-describe('CofactorExpansion', function () {
-  describe('#getDeterminant', function () {
+describe('Determinant', function () {
+  describe('#compute', function () {
     it('제대로 동작함: 2 × 2 정사각행렬', function () {
       const two = new SquareMatrix([
         [2, 4],
         [3, 7]
       ])
-      expect(CofactorExpansion.getDeterminant(two)).to.equal(2)
+      expect(Determinant.compute(two)).to.equal(2)
     })
 
     it('제대로 동작함: 3 × 3 정사각행렬', function () {
@@ -165,7 +165,7 @@ describe('CofactorExpansion', function () {
         [3, 0, -1],
         [1, -2, 2]
       ])
-      expect(CofactorExpansion.getDeterminant(three)).to.equal(-31)
+      expect(Determinant.compute(three)).to.equal(-31)
     })
 
     it('제대로 동작함: 4 × 4 정사각행렬', function () {
@@ -175,7 +175,7 @@ describe('CofactorExpansion', function () {
         [1, 0, 1, 3],
         [0, 1, 3, 1]
       ])
-      expect(CofactorExpansion.getDeterminant(four)).to.equal(-7)
+      expect(Determinant.compute(four)).to.equal(-7)
     })
 
     it('제대로 동작함: 5 × 5 정사각행렬', function () {
@@ -186,7 +186,7 @@ describe('CofactorExpansion', function () {
         [4, 1, 1, 1, 1],
         [1, 1, 1, 5, 1]
       ])
-      expect(CofactorExpansion.getDeterminant(five)).to.equal(-24)
+      expect(Determinant.compute(five)).to.equal(-24)
     })
   })
 })
