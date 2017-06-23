@@ -2,6 +2,7 @@
 
 import chai from 'chai'
 import dirtyChai from 'dirty-chai'
+
 import { List } from 'immutable'
 import SquareMatrix from '../src/SquareMatrix'
 import CofactorExpansion from '../src/CofactorExpansion'
@@ -41,14 +42,14 @@ describe('SquareMatrix', function () {
     })
   })
 
-  describe('.data', function () {
+  describe('.elements', function () {
     it('불변 리스트임', function () {
-      expect(new That([[2, 2], [2, 2]]).data).to.be.an.instanceof(List)
+      expect(new That([[2, 2], [2, 2]]).elements).to.be.an.instanceof(List)
     })
 
     it('생성자에 입력한 값이 대입됨', function () {
-      const data = [[1, 2], [3, 4]]
-      expect(new That(data).data.toJS()).to.deep.equal(data)
+      const elements = [[1, 2], [3, 4]]
+      expect(new That(elements).elements.toJS()).to.deep.equal(elements)
     })
   })
   describe('.size', function () {
@@ -106,12 +107,12 @@ describe('SquareMatrix', function () {
         [7, 8, 9]
       ])
 
-      expect(three.getMinor(1, 1).data.toJS()).to.deep.equal([
+      expect(three.getMinor(1, 1).elements.toJS()).to.deep.equal([
         [1, 3],
         [7, 9]
       ])
 
-      expect(three.getMinor(0, 2).data.toJS()).to.deep.equal([
+      expect(three.getMinor(0, 2).elements.toJS()).to.deep.equal([
         [4, 5],
         [7, 8]
       ])
@@ -126,7 +127,7 @@ describe('SquareMatrix', function () {
         [21, 22, 23, 24, 25]
       ])
 
-      expect(five.getMinor(2, 3).data.toJS()).to.deep.equal([
+      expect(five.getMinor(2, 3).elements.toJS()).to.deep.equal([
         [1, 2, 3, 5],
         [6, 7, 8, 10],
         [16, 17, 18, 20],
