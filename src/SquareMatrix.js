@@ -8,12 +8,12 @@ class SquareMatrix {
       throw new Error('2차원 리스트가 아닙니다')
     }
 
-    if (data.some(row => row.some(e => !Number.isInteger(e)))) {
-      throw new Error('2차원 정수 리스트가 아닙니다')
-    }
-
     if (data.some(row => row.size !== data.size)) {
       throw new Error('정사각형 리스트가 아닙니다')
+    }
+
+    if (data.some(row => row.some(e => !Number.isInteger(e)))) {
+      throw new Error('2차원 정수 리스트가 아닙니다')
     }
 
     this.data = data
@@ -42,6 +42,9 @@ class SquareMatrix {
   }
 
   getMinor (i, j) {
+    if (i < 0 || j < 0) throw new Error('행렬 최소 범위를 벗어났습니다')
+    if (i >= this.size || j >= this.size) throw new Error('행렬 최대 범위를 벗어났습니다')
+
     return new SquareMatrix(this.data.delete(i).map(row => row.delete(j)))
   }
 

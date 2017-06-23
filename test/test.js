@@ -23,6 +23,14 @@ describe('SquareMatrix', function () {
       expect(() => new That([[3], [6, 9], 12])).to.throw(error)
     })
 
+    it('에러 던짐: 정사각형 배열이 아닌 경우', function () {
+      const error = '정사각형 리스트가 아닙니다'
+
+      expect(() => new That([[1, 2], [3, 4, 5]])).to.throw(error)
+      expect(() => new That([[1, 2], [3, 4], [5, 6]])).to.throw(error)
+      expect(() => new That([[1, 2, 3], [4, 5, 6], [7, 8]])).to.throw(error)
+    })
+
     it('에러 던짐: 배열에 정수가 아닌 값이 포함된 경우', function () {
       const error = '2차원 정수 리스트가 아닙니다'
 
@@ -30,14 +38,6 @@ describe('SquareMatrix', function () {
       expect(() => new That([[1, 2], [3, '4']])).to.throw(error)
       expect(() => new That([[1, 2], [3, 4.4]])).to.throw(error)
       expect(() => new That([[[1, 2], 3], [4, 5]])).to.throw(error)
-    })
-
-    it('에러 던짐: 정사각형 배열이 아닌 경우', function () {
-      const error = '정사각형 리스트가 아닙니다'
-
-      expect(() => new That([[1, 2], [3, 4, 5]])).to.throw(error)
-      expect(() => new That([[1, 2], [3, 4], [5, 6]])).to.throw(error)
-      expect(() => new That([[1, 2, 3], [4, 5, 6], [7, 8]])).to.throw(error)
     })
   })
 
@@ -82,29 +82,28 @@ describe('SquareMatrix', function () {
   })
 
   describe('#toString', function () {
-    it('행렬을 예쁘게 출력함', function () {
-      const two = new That([[1, 2], [3, 4]])
-      const three = new That([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    it('제대로 출력함: 1 × 1 정사각행렬', function () {
+      const one = new That([[1]])
+      expect(one.toString()).to.equal('[ 1 ]')
+    })
 
+    it('제대로 출력함: 2 × 2 정사각행렬', function () {
+      const two = new That([[1, 2], [3, 4]])
       expect(two.toString()).to.equal('⎡ 1 2 ⎤\n⎣ 3 4 ⎦')
+    })
+
+    it('제대로 출력함: 3 × 3 정사각행렬', function () {
+      const three = new That([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
       expect(three.toString()).to.equal('⎡ 1 2 3 ⎤\n⎢ 4 5 6 ⎥\n⎣ 7 8 9 ⎦')
     })
   })
 
   describe('#getMinor', function () {
-    it('소행렬식을 제대로 구함', function () {
+    it('제대로 구함: 3 × 3 정사각행렬', function () {
       const three = new That([
         [1, 2, 3],
         [4, 5, 6],
         [7, 8, 9]
-      ])
-
-      const five = new That([
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15],
-        [16, 17, 18, 19, 20],
-        [21, 22, 23, 24, 25]
       ])
 
       expect(three.getMinor(1, 1).data.toJS()).to.deep.equal([
@@ -116,6 +115,16 @@ describe('SquareMatrix', function () {
         [4, 5],
         [7, 8]
       ])
+    })
+
+    it('제대로 구함: 5 × 5 정사각행렬', function () {
+      const five = new That([
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20],
+        [21, 22, 23, 24, 25]
+      ])
 
       expect(five.getMinor(2, 3).data.toJS()).to.deep.equal([
         [1, 2, 3, 5],
@@ -123,6 +132,18 @@ describe('SquareMatrix', function () {
         [16, 17, 18, 20],
         [21, 22, 23, 25]
       ])
+    })
+
+    it('에러 던짐: 행렬 최대 범위 초과', function () {
+      const that = new That([[1, 2], [3, 4]])
+      expect(() => that.getMinor(2, 0)).to.throw('행렬 최대 범위를 벗어났습니다')
+      expect(() => that.getMinor(0, 2)).to.throw('행렬 최대 범위를 벗어났습니다')
+    })
+
+    it('에러 던짐: 행렬 최소 범위 초과', function () {
+      const that = new That([[1, 2], [3, 4]])
+      expect(() => that.getMinor(-1, 0)).to.throw('행렬 최소 범위를 벗어났습니다')
+      expect(() => that.getMinor(0, -1)).to.throw('행렬 최소 범위를 벗어났습니다')
     })
   })
 })
