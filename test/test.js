@@ -3,16 +3,18 @@
 import chai from 'chai'
 import dirtyChai from 'dirty-chai'
 import { List } from 'immutable'
+import SquareMatrix from '../src/SquareMatrix'
+import CofactorExpansion from '../src/CofactorExpansion'
 
 chai.use(dirtyChai)
 const { expect } = chai
 
 describe('SquareMatrix', function () {
-  const That = require('../src/SquareMatrix')
+  const That = SquareMatrix
 
   describe('constructor', function () {
     it('에러 던짐: 2차원 배열이 아닌 경우', function () {
-      const error = '2차원 배열이 아닙니다'
+      const error = '2차원 리스트가 아닙니다'
 
       expect(() => new That()).to.throw(error)
       expect(() => new That('1')).to.throw(error)
@@ -22,7 +24,7 @@ describe('SquareMatrix', function () {
     })
 
     it('에러 던짐: 배열에 정수가 아닌 값이 포함된 경우', function () {
-      const error = '2차원 정수 배열이 아닙니다'
+      const error = '2차원 정수 리스트가 아닙니다'
 
       expect(() => new That([[undefined]])).to.throw(error)
       expect(() => new That([[1, 2], [3, '4']])).to.throw(error)
@@ -31,18 +33,11 @@ describe('SquareMatrix', function () {
     })
 
     it('에러 던짐: 정사각형 배열이 아닌 경우', function () {
-      const error = '정사각형 배열이 아닙니다'
+      const error = '정사각형 리스트가 아닙니다'
 
       expect(() => new That([[1, 2], [3, 4, 5]])).to.throw(error)
       expect(() => new That([[1, 2], [3, 4], [5, 6]])).to.throw(error)
       expect(() => new That([[1, 2, 3], [4, 5, 6], [7, 8]])).to.throw(error)
-    })
-
-    it('에러 던짐: 1 × 1 정사각행렬인 경우', function () {
-      const error = '1 × 1 정사각행렬은 지원하지 않습니다'
-
-      expect(() => new That([[0]])).to.throw(error)
-      expect(() => new That([[32767]])).to.throw(error)
     })
   })
 
@@ -105,29 +100,71 @@ describe('SquareMatrix', function () {
       ])
 
       const five = new That([
-        [+1, +2, +3, +4, +5],
-        [+6, +7, +8, +9, 10],
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
         [11, 12, 13, 14, 15],
         [16, 17, 18, 19, 20],
         [21, 22, 23, 24, 25]
       ])
 
-      expect(three.getMinor(1, 1).toJS()).to.deep.equal([
+      expect(three.getMinor(1, 1).data.toJS()).to.deep.equal([
         [1, 3],
         [7, 9]
       ])
 
-      expect(three.getMinor(0, 2).toJS()).to.deep.equal([
+      expect(three.getMinor(0, 2).data.toJS()).to.deep.equal([
         [4, 5],
         [7, 8]
       ])
 
-      expect(five.getMinor(2, 3).toJS()).to.deep.equal([
-        [+1, +2, +3, +5],
-        [+6, +7, +8, 10],
+      expect(five.getMinor(2, 3).data.toJS()).to.deep.equal([
+        [1, 2, 3, 5],
+        [6, 7, 8, 10],
         [16, 17, 18, 20],
         [21, 22, 23, 25]
       ])
+    })
+  })
+})
+
+describe('CofactorExpansion', function () {
+  describe('#getDeterminant', function () {
+    it('제대로 동작함: 2 × 2 정사각행렬', function () {
+      const two = new SquareMatrix([
+        [2, 4],
+        [3, 7]
+      ])
+      expect(CofactorExpansion.getDeterminant(two)).to.equal(2)
+    })
+
+    it('제대로 동작함: 3 × 3 정사각행렬', function () {
+      const three = new SquareMatrix([
+        [2, 3, 1],
+        [3, 0, -1],
+        [1, -2, 2]
+      ])
+      expect(CofactorExpansion.getDeterminant(three)).to.equal(-31)
+    })
+
+    it('제대로 동작함: 4 × 4 정사각행렬', function () {
+      const four = new SquareMatrix([
+        [1, 2, 1, 4],
+        [0, -1, 2, 1],
+        [1, 0, 1, 3],
+        [0, 1, 3, 1]
+      ])
+      expect(CofactorExpansion.getDeterminant(four)).to.equal(-7)
+    })
+
+    it('제대로 동작함: 5 × 5 정사각행렬', function () {
+      const five = new SquareMatrix([
+        [1, 2, 1, 1, 1],
+        [1, 1, 1, 1, 3],
+        [1, 1, 1, 1, 1],
+        [4, 1, 1, 1, 1],
+        [1, 1, 1, 5, 1]
+      ])
+      expect(CofactorExpansion.getDeterminant(five)).to.equal(-24)
     })
   })
 })
