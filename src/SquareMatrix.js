@@ -31,7 +31,18 @@ class SquareMatrix {
     return `${this.size} × ${this.size} 정사각행렬`
   }
 
+  checkIndex (...indices) {
+    for (const index of indices) {
+      if (index < 0) throw new Error('행렬 최소 범위를 벗어났습니다')
+      if (index >= this.size) throw new Error('행렬 최대 범위를 벗어났습니다')
+    }
+
+    return true
+  }
+
   getBorders (index) {
+    this.checkIndex(index)
+
     const first = index === 0
     const last = index === this.size - 1
 
@@ -42,15 +53,21 @@ class SquareMatrix {
   }
 
   getMinor (i, j) {
-    if (i < 0 || j < 0) {
-      throw new Error('행렬 최소 범위를 벗어났습니다')
-    }
-
-    if (i >= this.size || j >= this.size) {
-      throw new Error('행렬 최대 범위를 벗어났습니다')
-    }
-
+    this.checkIndex(i, j)
     return new SquareMatrix(this.elements.delete(i).map(row => row.delete(j)))
+  }
+
+  setColumn (index, column) {
+    this.checkIndex(index)
+
+    if (!List.isList(column)) column = fromJS(column)
+    if (!List.isList(column) || column.some(c => !Number.isInteger(c))) throw new Error('열벡터가 아닙니다')
+
+    if (this.size !== column.size) {
+      throw new Error('열벡터의 크기가 행렬과 일치하지 않습니다')
+    }
+
+    return new SquareMatrix(this.elements.map(row => row.set(index, column.get(index))))
   }
 
   toString () {

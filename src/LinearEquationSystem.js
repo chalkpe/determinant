@@ -33,8 +33,13 @@ class LinearEquationSystem {
   }
 
   solve () {
-    // TODO: Cramer's rule
-    const divisor = Determinant.compute(this.getCoefficientMatrix())
+    const terms = this.getConstantTerms()
+    const matrix = this.getCoefficientMatrix()
+    const divisor = Determinant.compute(matrix)
+
+    return [...Array(this.size)]
+      .map((_, i) => matrix.setColumn(i, terms))
+      .map(v => [v, Determinant.compute(divisor)])
   }
 }
 
