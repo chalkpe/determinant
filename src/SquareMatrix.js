@@ -3,8 +3,7 @@ import { List, fromJS } from 'immutable'
 class SquareMatrix {
   constructor (elements) {
     if (!List.isList(elements)) elements = fromJS(elements)
-
-    if (!List.isList(elements) || !elements.every(row => List.isList(row))) {
+    if (!List.isList(elements) || elements.some(row => !List.isList(row))) {
       throw new Error('2차원 리스트가 아닙니다')
     }
 
@@ -67,7 +66,7 @@ class SquareMatrix {
       throw new Error('열벡터의 크기가 행렬과 일치하지 않습니다')
     }
 
-    return new SquareMatrix(this.elements.map(row => row.set(index, column.get(index))))
+    return new SquareMatrix(this.elements.map((row, i) => row.set(index, column.get(i))))
   }
 
   toString () {

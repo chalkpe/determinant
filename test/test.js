@@ -156,16 +156,16 @@ describe('SquareMatrix', function () {
         [7, 8, 9]
       ])
 
-      expect(three.setColumn(1, [0, 0, 0]).elements.toJS()).to.deep.equal([
-        [1, 0, 3],
-        [4, 0, 6],
-        [7, 0, 9]
+      expect(three.setColumn(1, [10, 11, 12]).elements.toJS()).to.deep.equal([
+        [1, 10, 3],
+        [4, 11, 6],
+        [7, 12, 9]
       ])
 
-      expect(three.setColumn(0, [2, 2, 2]).elements.toJS()).to.deep.equal([
-        [2, 2, 3],
-        [2, 5, 6],
-        [2, 8, 9]
+      expect(three.setColumn(0, [-1, -2, -3]).elements.toJS()).to.deep.equal([
+        [-1, 2, 3],
+        [-2, 5, 6],
+        [-3, 8, 9]
       ])
     })
 
