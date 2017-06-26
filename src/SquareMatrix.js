@@ -40,15 +40,10 @@ class SquareMatrix {
   }
 
   getBorders (index) {
-    this.checkIndex(index)
-
     const first = index === 0
     const last = index === this.size - 1
 
-    if (first && last) return '[]'
-    else if (first) return '⎡⎤'
-    else if (last) return '⎣⎦'
-    else return '⎢⎥'
+    return first && last ? '[]' : first ? '⎡⎤' : last ? '⎣⎦' : '⎢⎥'
   }
 
   getMinor (i, j) {
