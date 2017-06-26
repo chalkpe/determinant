@@ -4,7 +4,8 @@ import LinearEquation from '../../src/LinearEquation'
 
 export default ({ expect }) => function () {
   const tests = {
-    'constructor': './constructor'
+    'constructor': './constructor',
+    '.size': './size'
   }
 
   for (const [name, path] of Object.entries(tests)) {
