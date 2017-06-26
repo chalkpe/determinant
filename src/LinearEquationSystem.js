@@ -15,7 +15,7 @@ class LinearEquationSystem {
     const sizeSet = Set(this.equations.map(e => e.size))
 
     if (sizeSet.size > 1) {
-      throw new Error('연립방정식의 미지수 개수가 동일하지 않습니다')
+      throw new Error('방정식들의 미지수 개수가 동일하지 않습니다')
     }
 
     this.size = sizeSet.first()
@@ -24,22 +24,45 @@ class LinearEquationSystem {
     }
   }
 
-  getCoefficientMatrix () {
+  get coefficientsMatrix () {
     return new SquareMatrix(this.equations.map(e => e.coefficients))
   }
 
-  getConstantTerms () {
+  get constantTerms () {
     return List(this.equations.map(e => e.constantTerm))
   }
 
   solve () {
-    const terms = this.getConstantTerms()
-    const matrix = this.getCoefficientMatrix()
+    const vector = this.constantTerms
+    const matrix = this.coefficientsMatrix
     const divisor = Determinant.compute(matrix)
 
     return [...Array(this.size)]
-      .map((_, i) => matrix.setColumn(i, terms))
-      .map(v => [v, Determinant.compute(divisor)])
+      .map((_, i) => matrix.setColumn(i, vector))
+      .map(v => [Determinant.compute(v), divisor])
+  }
+
+  getBorders (index) {
+    const first = index === 0
+    const last = index === this.size - 1
+    const centre = index === Math.floor(this.size / 2)
+
+    return first && last ? '{'
+      : first ? '⎧'
+      : last ? '⎩'
+      : centre ? '⎨'
+      : '⎪'
+  }
+
+  get name () {
+    return `미지수가 ${this.size}개인 연립일차방정식`
+  }
+
+  toString () {
+    const equations = this.equations
+      .map((e, i) => [this.getBorders(i), e.toString()].join(' '))
+
+    return [this.name, ...equations].join('\n')
   }
 }
 

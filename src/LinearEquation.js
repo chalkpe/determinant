@@ -13,16 +13,29 @@ class LinearEquation {
 
     this.coefficients = coefficients // 계수
     this.constantTerm = constantTerm // 상수항
-    this.size = this.coefficients.size // 미지수의 수
+  }
+
+  get size () {
+    return this.coefficients.size // 미지수의 수
   }
 
   get unknowns () {
-    return this.coefficients
-      .map((c, i) => (c > 1 ? c : '') + String.fromCharCode(97 + i)) // 'a'
+    return this.coefficients.map((c, i) => {
+      if (c === 0) return ''
+
+      const x = String.fromCharCode(97 + i)
+      const a = c !== 1 && c !== -1 ? Math.abs(c) : ''
+      const o = c > 0 ? (i > 0 ? '+ ' : '') : (i > 0 ? '- ' : '-')
+
+      return o + a + x
+    })
   }
 
   toString () {
-    return `${this.unknowns.join(' + ')} = ${this.constantTerm}`
+    const left = this.unknowns.filter(x => x)
+    const right = this.constantTerm.toString(10)
+
+    return [...left, '=', right].join(' ')
   }
 }
 

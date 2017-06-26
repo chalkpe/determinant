@@ -6,12 +6,13 @@ import dirtyChai from 'dirty-chai'
 chai.use(dirtyChai)
 const { expect } = chai
 
-const tests = {
-  SquareMatrix: './SquareMatrix',
-  Determinant: './Determinant'
-}
+const tests = [
+  'SquareMatrix',
+  'Determinant',
+  'LinearEquation'
+]
 
-for (const [name, path] of Object.entries(tests)) {
-  const test = require(path).default
-  describe(name, test(expect))
-}
+tests.forEach(name => {
+  const test = require(`./${name}`)
+  describe(name, test.default({ expect }))
+})

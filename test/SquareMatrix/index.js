@@ -1,8 +1,9 @@
 /* eslint-env node, mocha */
 
+import { List } from 'immutable'
 import SquareMatrix from '../../src/SquareMatrix'
 
-export default (expect) => function () {
+export default ({ expect }) => function () {
   const tests = {
     'constructor': './constructor',
 
@@ -17,6 +18,6 @@ export default (expect) => function () {
 
   for (const [name, path] of Object.entries(tests)) {
     const test = require(path).default
-    describe(name, test(expect, SquareMatrix))
+    describe(name, test({ expect, SquareMatrix, List }))
   }
 }

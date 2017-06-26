@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 
-export default (expect, That) => function () {
+export default ({ expect, SquareMatrix }) => function () {
   it('제대로 구함: 3 × 3 정사각행렬', function () {
-    const three = new That([
+    const three = new SquareMatrix([
       [1, 2, 3],
       [4, 5, 6],
       [7, 8, 9]
@@ -20,7 +20,7 @@ export default (expect, That) => function () {
   })
 
   it('제대로 구함: 5 × 5 정사각행렬', function () {
-    const five = new That([
+    const five = new SquareMatrix([
       [1, 2, 3, 4, 5],
       [6, 7, 8, 9, 10],
       [11, 12, 13, 14, 15],
@@ -37,13 +37,13 @@ export default (expect, That) => function () {
   })
 
   it('에러 던짐: 행렬 최대 범위 초과', function () {
-    const that = new That([[1, 2], [3, 4]])
+    const that = new SquareMatrix([[1, 2], [3, 4]])
     expect(() => that.getMinor(2, 0)).to.throw('행렬 최대 범위를 벗어났습니다')
     expect(() => that.getMinor(0, 2)).to.throw('행렬 최대 범위를 벗어났습니다')
   })
 
   it('에러 던짐: 행렬 최소 범위 초과', function () {
-    const that = new That([[1, 2], [3, 4]])
+    const that = new SquareMatrix([[1, 2], [3, 4]])
     expect(() => that.getMinor(-1, 0)).to.throw('행렬 최소 범위를 벗어났습니다')
     expect(() => that.getMinor(0, -1)).to.throw('행렬 최소 범위를 벗어났습니다')
   })
