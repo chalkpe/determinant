@@ -9,7 +9,8 @@ const { expect } = chai
 const tests = [
   'SquareMatrix',
   'Determinant',
-  'LinearEquation'
+  'LinearEquation',
+  'LinearEquationSystem'
 ]
 
 tests.forEach(name => {
