@@ -10,7 +10,8 @@ export default ({ expect }) => function () {
     'constructor': './constructor',
     '.name': './name',
     '.coefficientsMatrix': './coefficientsMatrix',
-    '.constantTerms': './constantTerms'
+    '.constantTerms': './constantTerms',
+    '#solve': './solve'
     // '#toString': './toString'
   }
 
